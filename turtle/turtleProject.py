@@ -67,7 +67,7 @@ def draw_spot(turtle):
     y = -270
     turtle.setpos(x, y)
     turtle.pendown()
-    for _ in range(30):
+    for _ in range(29):
         for _ in range(32):
             turtle.pencolor(choice(colors))
             turtle.dot(10)
