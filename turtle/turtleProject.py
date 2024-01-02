@@ -1,3 +1,5 @@
+#!/usr/bin/python3
+
 from turtle import Screen, Turtle, colormode
 from random import choice, randint
 import colorgram
@@ -10,12 +12,14 @@ turtle.color("red", "green")
 
 
 def draw_square(turtle):
+    """draw a square with the turtle"""
     for _ in range(4):
         turtle.forward(100)
         turtle.right(90)
 
 
 def draw_dashed_line(turtle):
+    """draw dashed line with the turtle"""
     for _ in range(15):
         turtle.forward(10)
         turtle.up()
@@ -24,6 +28,7 @@ def draw_dashed_line(turtle):
 
 
 def draw_various_shapes(turtle):
+    """draw poligons from 3 to 10 sided"""
     colors = ['red', 'green', 'blue',
               'orange', 'yellow', 'aquamarine',
               'pink', 'maroon']
@@ -36,6 +41,7 @@ def draw_various_shapes(turtle):
 
 
 def move_random(turtle):
+    """make haphazard movement with the turtle"""
     turn = [turtle.right, turtle.left]
     angle = [0, 90, 180, 360]
     move = [turtle.forward, turtle.backward]
@@ -49,6 +55,7 @@ def move_random(turtle):
 
 
 def draw_spirograph(turtle, gap):
+    """draw a spirograph"""
     turtle.speed(0)
     loop = int(360 / gap)
     for _ in range(loop):
@@ -59,6 +66,7 @@ def draw_spirograph(turtle, gap):
 
 
 def draw_spot(turtle):
+    """draw spotted art"""
     turtle.speed(0)
     colors = colorgram.extract('image.jpeg', (18 * 32))
     colors = [tuple(i.rgb) for i in colors]
