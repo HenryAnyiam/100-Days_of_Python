@@ -46,5 +46,10 @@ while guesses < total_states:
         guessed.append(guess)
         write_state(state_x, state_y, guess)
         guesses += 1
+    elif guess == 'Exit':
+        missed = [i for i in state_names if i not in guessed]
+        new_data = pandas.DataFrame({'states': missed})
+        new_data.to_csv('./US_states_to_learn.csv')
+        break
 
 screen.mainloop()
