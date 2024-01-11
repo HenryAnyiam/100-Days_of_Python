@@ -26,9 +26,13 @@ class PasswordManagerUI(CTk):
                                 font=("Times New Roman", 20))
         self.website.grid(row=1, column=0, padx=5, pady=5, sticky="w")
 
-        self.website_entry = CTkEntry(self, width=300)
-        self.website_entry.grid(row=1, column=1, columnspan=2, padx=5, pady=5)
+        self.website_entry = CTkEntry(self, width=155)
+        self.website_entry.grid(row=1, column=1, padx=5, pady=5)
         self.website_entry.focus()
+
+        self.search = CTkButton(self, text="Search", width=135,
+                                command=self.search_saved_data)
+        self.search.grid(row=1, column=2, padx=5, pady=5)
 
         self.email = CTkLabel(self, text="Email/Username:",
                               font=("Times New Roman", 20))
@@ -80,6 +84,18 @@ class PasswordManagerUI(CTk):
         self.password_entry.delete(0, END)
         self.password_entry.insert(0, password)
         pyperclip.copy(password)
+    
+    def search_saved_data(self) -> None:
+        """search saved data"""
+        website = self.website_entry.get()
+        data = self.password_manager.get_data(website)
+        if data:
+            messagebox.showinfo(title=f"{website} details",
+                                message=f"Email: {data.get('email')}\n"
+                                f"Password: {data.get('password')}")
+        else:
+            messagebox.showerror(title="Error",
+                                 message=f"{website} Details Not Found")
 
 
 if __name__ == "__main__":

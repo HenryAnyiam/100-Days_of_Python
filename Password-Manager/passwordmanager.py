@@ -3,6 +3,7 @@
 
 import json
 from random import randint, choice, shuffle
+from typing import Dict
 
 
 class PasswordManager:
@@ -13,9 +14,9 @@ class PasswordManager:
 
     def __init__(self, location: str) -> None:
         type(self)._password_file = location
-        self.get_data()
+        self.load_data()
 
-    def get_data(self) -> None:
+    def load_data(self) -> None:
         """load saved data"""
         try:
             location = type(self)._password_file
@@ -23,6 +24,10 @@ class PasswordManager:
                 type(self)._user_data = json.load(my_file)
         except FileNotFoundError:
             type(self)._user_data = {}
+    
+    def get_data(self, website: str) -> Dict:
+        """get user data"""
+        return type(self)._user_data.get(website)
 
     def save_password(self, details: dict) -> None:
         """save password in json format"""
