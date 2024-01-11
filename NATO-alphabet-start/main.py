@@ -31,9 +31,15 @@ data_alpha = {row.letter: row.code for index, row in data.iterrows()}
 
 #TODO 2. Create a list of the phonetic code words from a word that the user inputs.
 
-word = input("Enter a word: ").upper()
+while True:
+    try:
+        word = input("Enter a word: ").upper()
 
-result = [data_alpha[i] for i in word]
+        result = [data_alpha[i] for i in word]
+    except KeyError:
+        print("Please input only alphabets")
+    else:
+        break
 
 print(result)
 
