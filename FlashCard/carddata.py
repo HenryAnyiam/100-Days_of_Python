@@ -3,6 +3,7 @@
 
 import pandas
 from random import choice
+from typing import Dict, Tuple
 
 
 class CardData:
@@ -13,7 +14,7 @@ class CardData:
         self.data_keys = list(self.language_data.keys())
         self.current_word = choice(self.data_keys)
 
-    def load_data(self):
+    def load_data(self) -> Dict:
         """load data to instance"""
         data = pandas.read_csv("./data/fr-en.csv")
         french = data.french_words.to_list()
@@ -21,7 +22,7 @@ class CardData:
         new_data = {i: (french[i], english[i]) for i in range(1, len(french))}
         return new_data
 
-    def next_data(self, add_back: bool = False) -> tuple:
+    def next_data(self, add_back: bool = False) -> Tuple:
         """return another word"""
         if not add_back:
             self.data_keys.remove(self.current_word)

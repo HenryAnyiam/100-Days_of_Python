@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """create flashcard app ui"""
 
-from customtkinter import *
+from customtkinter import CTk, CTkImage, CTkLabel, CTkButton
 from PIL import Image
 from carddata import CardData
 
@@ -31,7 +31,8 @@ class FlashCardUI(CTk):
         self.show_french.grid(row=0, column=0, columnspan=2, padx=10, pady=10)
 
         self.show_english = CTkLabel(self, image=self.card_back, text="",
-                                     font=("Times New Roman", 30))
+                                     font=("Times New Roman", 30),
+                                     text_color="white")
 
         self.mark_wrong = CTkButton(self, image=self.cross, text="",
                                     fg_color="transparent", border_width=1,
@@ -44,24 +45,26 @@ class FlashCardUI(CTk):
         self.mark_right.grid(row=1, column=1, padx=10, pady=10)
         self.wrong()
 
-    def right(self):
+    def right(self) -> None:
         """handle right answer"""
-        self.next(True)
+        self.next_card(True)
 
-    def wrong(self):
+    def wrong(self) -> None:
         """handle wrong answer"""
-        self.next(False)
+        self.next_card(False)
 
-    def next(self, add_back: bool) -> None:
+    def next_card(self, add_back: bool) -> None:
+        """brings up the next word"""
         self.current_data = self.data.next_data(add_back)
         self.show_french.configure(text="French\n"
                                    f"{self.current_data[0]}")
         self.show_english.grid_forget()
         self.show_french.grid(row=0, column=0, columnspan=2, padx=10, pady=10)
-        self.after(5000, self.show_answer)
+        self.after(5000, self.flip_card)
+        
 
-    def show_answer(self) -> None:
-        """switch cards"""
+    def flip_card(self) -> None:
+        """flip card to show back card"""
         self.show_english.configure(text="EngLish\n"
                                     f"{self.current_data[1]}")
         self.show_french.grid_forget()
