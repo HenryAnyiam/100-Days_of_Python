@@ -59,7 +59,7 @@ class QuotesUI(CTk):
         if len(self.quotes_list) <= 2:
             self.populate_quotes()
         quote = self.quotes_list.pop(0)
-        message = f"{quote['q']}...\n\n    {quote['a']}"
+        message = f"{quote['q']}...\n\n{quote['a']}"
         self.quotes.configure(text=message)
         
 
