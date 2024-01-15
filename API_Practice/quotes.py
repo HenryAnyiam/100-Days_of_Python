@@ -36,7 +36,8 @@ class QuotesUI(CTk):
         background = CTkImage(light_image=Image.open("./background.png"),
                               size=(300, 400))
         self.quotes = CTkLabel(self, image=background, text="",
-                               font=("Times new Roman", 25, "bold"))
+                               font=("Times new Roman", 25, "bold"),
+                               wraplength=270)
         self.quotes.grid(row=0, column=0, padx=10, pady=10)
 
         paw = CTkImage(light_image=Image.open("./paw.jpeg"), size=(70,70))
@@ -58,18 +59,7 @@ class QuotesUI(CTk):
         if len(self.quotes_list) <= 2:
             self.populate_quotes()
         quote = self.quotes_list.pop(0)
-        length = 0
-        curr_quote = quote['q'].split()
-        message = ""
-        hold = ""
-        for i in curr_quote:
-            message += i + " "
-            hold += i + " "
-            length += 1
-            if (length % 4 == 0) or len(hold) >= 21:
-                message += "\n"
-                hold = ""
-        message += f"...\n\n    {quote['a']}"
+        message = f"{quote['q']}...\n\n    {quote['a']}"
         self.quotes.configure(text=message)
         
 
