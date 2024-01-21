@@ -3,27 +3,27 @@
 
 from typing import List, Dict
 import requests
-from os import getenv
+
 
 class FlightSearch:
     """search for flight data"""
 
-    def __init__(self, city: str = "LON",
-                 flights: List = [],
+    def __init__(self, key: str,
+                 city: str = "LON",
+                 flights: List[str] = [],
                  dates: List[str] = ["03/04/2024",
                                      "17/04/2024"]) -> None:
         """Initialize FlightSearch Module"""
         self.flights = flights
         self.city = city
         self.dates = dates
-        self.__api_key = getenv("APIKEY")
         self.__header = {
-            "apikey": self.__api_key,
+            "apikey": key,
             "Content-Type": "applications/json"
         }
         self.searched_flights = {}
         self.search_flights()
-    
+
     def search_flights(self):
         """search cheapest flights"""
         for i in self.flights:
@@ -36,8 +36,9 @@ class FlightSearch:
                 "max_stopovers": 0,
                 "curr": "GBP"
             }
-            response = requests.get(url="https://api.tequila.kiwi.com/v2/search",
-                        headers=self.__header,
-                        params=params)
+            response = requests.get(url="https://api.tequila.kiwi.com"
+                                    "/v2/search",
+                                    headers=self.__header,
+                                    params=params)
             if response.status_code == 200:
                 self.searched_flights[i] = response.json()["data"][0]["price"]
