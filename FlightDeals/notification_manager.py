@@ -2,12 +2,13 @@
 """Handle sending notifications"""
 
 from smtplib import SMTP
+from typing import List
 
 
 class NotificationManager:
     """sends mail notificaton"""
 
-    def __init__(self, sender: str, receiver: str,
+    def __init__(self, sender: str, receiver: List[str],
                  password: str,
                  host: str = "smtp.gmail.com") -> None:
         """Initialize NotificationManager"""
@@ -20,6 +21,7 @@ class NotificationManager:
 
     def send_mail(self, message: str) -> None:
         """send a mail"""
-        self.connection.sendmail(from_addr=self.sender,
-                                 to_addrs=self.receiver,
-                                 msg=message)
+        for i in self.receiver:
+            self.connection.sendmail(from_addr=self.sender,
+                                    to_addrs=i,
+                                    msg=message)

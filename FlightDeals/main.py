@@ -6,6 +6,7 @@ from os import getenv
 from data_manager import DataManager
 from flight_search import FlightSearch
 from notification_manager import NotificationManager
+from user import User
 
 data_handler = DataManager(auth=getenv('AUTH'))
 
@@ -16,7 +17,7 @@ updates = data_handler.compare_prices(flights=flight_handler.searched_flights)
 
 if updates:
     notification_handler = NotificationManager(sender="taskhub2023@gmail.com",
-                                               receiver="louislex95@gmail.com",
+                                               receiver=User.get_users(),
                                                password=getenv('PASSWORD'))
     message = "Subject: Cheap Flights Found\n\n"
     message += "The following flights has been found at better prices\n"
