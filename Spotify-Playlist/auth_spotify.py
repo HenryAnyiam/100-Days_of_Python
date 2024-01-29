@@ -3,9 +3,14 @@
 import spotipy
 from spotipy.oauth2 import SpotifyOAuth
 import pandas
+import get_songs
+from os import getenv
 
-sp = spotipy.Spotify(auth_manager=SpotifyOAuth(client_id="6b192c9888d54de7ac345f1437d75049",
-                                               client_secret="2a2ea00dd9454054a82837e02c0d7275",
+
+CLIENT_ID = getenv("CLIENT_ID")
+CLIENT_SECRET = getenv("CLIENT_SECRET")
+sp = spotipy.Spotify(auth_manager=SpotifyOAuth(client_id=CLIENT_ID,
+                                               client_secret=CLIENT_SECRET,
                                                redirect_uri="https://example.com",
                                                scope="playlist-modify-private"))
 
@@ -15,9 +20,13 @@ user_id = sp.current_user()['id']
 data = pandas.read_csv("./top_songs.csv")
 tracks = data.Songs.to_list()
 artists = data.Artists.to_list()
+tracks = tracks[0:100] if len(tracks) > 100 else tracks
+artists = artists[0:100] if len(artists) > 100 else artists
 
-playlist = sp.user_playlist_create(user=user_id, name="Back in Time",
-                                   public="False", description="Songs from the year 2016")
+year = get_songs.start_date
+playlist = sp.user_playlist_create(user=user_id, name=f"Back to {year}",
+                                   public="False",
+                                   description=f"Songs from the year {year}")
 
 playlist_tracks = []
 for i, j in zip(tracks, artists):

@@ -54,8 +54,7 @@ while len(top_music) < 100 and start_date < date.today():
     start_date += timedelta(weeks=1)
     if start_date >= date.today():
         start_date -= timedelta(weeks=1)
-        number += 100 - len(top_music)
-
+        number = 100 - len(top_music)
 
 songs = []
 artists = []
