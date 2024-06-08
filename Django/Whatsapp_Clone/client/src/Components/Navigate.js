@@ -8,7 +8,7 @@ export default function Navigate() {
             <br></br>
             <Link to="/login">Login</Link>
             <br></br>
-            <Link to="/messages">Messages</Link>
+            <Link to="/chat">Chat</Link>
         </div>
     )
 }

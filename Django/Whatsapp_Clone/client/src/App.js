@@ -15,11 +15,11 @@ function App() {
       <Routes>
         <Route path="/login" element={<Login/>}></Route>
         <Route path="/register" element={<Register/>}></Route>
-        <Route path="/messages" element={
+        <Route path="/chat" element={
           <div className='chat-container'>
             <Sidebar/>
             <ChatArea/>
-          </div>
+          </div> 
         }></Route>
       </Routes>
     </BrowserRouter>
