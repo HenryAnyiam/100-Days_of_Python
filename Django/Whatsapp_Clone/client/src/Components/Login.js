@@ -19,7 +19,11 @@ export default function Login() {
         .then((response) => {
             return response.json();
         })
-        .then((data) => {console.log(data)})
+        .then((data) => {
+            console.log(data)
+            const token = data.token;
+            document.cookie = `token=${token}; path=/`
+        })
         .catch((err) => {console.log(err)})
     }
     return (

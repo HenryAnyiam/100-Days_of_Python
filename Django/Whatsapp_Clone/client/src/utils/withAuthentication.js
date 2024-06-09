@@ -4,7 +4,7 @@ import { Navigate } from "react-router-dom";
 
 const withAuthentication = (wrappedContent) => {
     return function AuthComponent(props) {
-        const [isAuthenticated, setIsAuthenticated] = useState(false);
+        const [isAuthenticated, setIsAuthenticated] = useState(true);
 
         useEffect(() => {
             const token = document.cookie.split('; ').find(row => row.startsWith('token='))

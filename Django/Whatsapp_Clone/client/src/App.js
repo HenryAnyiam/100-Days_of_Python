@@ -11,7 +11,6 @@ import Sidebar from './Components/Sidebar';
 function App() {
   return (
     <BrowserRouter>
-      <Navigate/>
       <Routes>
         <Route path="/login" element={<Login/>}></Route>
         <Route path="/register" element={<Register/>}></Route>
