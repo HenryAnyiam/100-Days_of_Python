@@ -5,6 +5,7 @@ from rest_framework.exceptions import AuthenticationFailed
 from django.conf import settings
 from datetime import datetime, timedelta
 from django.contrib.auth import get_user_model
+from channels.db import database_sync_to_async
 
 
 User = get_user_model()
@@ -23,8 +24,8 @@ class UserAuthentication(BaseAuthentication):
         try:
             payload = jwt.decode(token, key=settings.SECRET_KEY, algorithms=['HS256'])
             self.verify_payload(payload)
-            user = User.objects.get(id=payload.get("id"))
-            return user
+            user = User.object.get(id=payload.get("id"))
+            return (user, token)
         except (InvalidTokenError, ExpiredSignatureError, User.DoesNotExist):
             raise AuthenticationFailed("Invalid Token")
 
@@ -46,6 +47,20 @@ class UserAuthentication(BaseAuthentication):
         if auth_header and auth_header.startswith("Bearer "):
             return auth_header.split(" ")[1]
         return None
+    
+    @database_sync_to_async
+    def authenticate_websocket(self, token):
+        """authenticate user for websocket"""
+
+        try:
+            payload = jwt.decode(token, settings.SECRET_KEY, algorithms=['HS256'])
+            self.verify_payload(payload)
+
+            user_id = payload['id']
+            user = User.object.get(id=user_id)
+            return user
+        except (InvalidTokenError, ExpiredSignatureError, User.DoesNotExist):
+            raise AuthenticationFailed("Invalid Token")
 
     @staticmethod
     def encrypt_payload(payload: dict) -> dict:

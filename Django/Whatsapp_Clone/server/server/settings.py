@@ -61,7 +61,7 @@ MIDDLEWARE = [
 ROOT_URLCONF = 'server.urls'
 
 CORS_ALLOWED_ORIGINS = [
-    'http://localhost:3000'
+    'http://127.0.0.1:3000'
 ]
 
 TEMPLATES = [
@@ -129,9 +129,9 @@ AUTH_PASSWORD_VALIDATORS = [
 AUTH_USER_MODEL = 'base.User'
 
 REST_FRAMEWORK = {
-    "DEFAULT_AUTHENTICATION_CLASSES": [
-        "base.auth.UserAuthentication"
-    ]
+    "DEFAULT_AUTHENTICATION_CLASSES": (
+        "base.auth.UserAuthentication",
+    )
 }
 
 # Internationalization

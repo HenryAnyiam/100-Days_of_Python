@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from django.contrib.auth import get_user_model, authenticate
+from .models import Message
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -20,6 +21,12 @@ class UserSerializer(serializers.ModelSerializer):
         fields = ['email', 'password', 'first_name', 'last_name']
         extra_kwargs = {'password': {'write_only': True}}
 
+
+class MessageSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Message
+        fields = "__all__"
 
 class LoginSerializer(serializers.Serializer):
     """serializer to handle user login"""
@@ -49,3 +56,4 @@ class LoginSerializer(serializers.Serializer):
             raise serializers.ValidationError("User is not active")
 
         return {"email": user.email, "id": user.id}
+

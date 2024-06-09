@@ -49,3 +49,9 @@ class User(AbstractBaseUser, PermissionsMixin):
         
         return self.email
 
+class Message(models.Model):
+    """create a message model"""
+
+    sender = models.ForeignKey(User, on_delete=models.CASCADE, related_name='sent_message')
+    receiver = models.ForeignKey(User, on_delete=models.CASCADE, related_name='received_messages')
+    message = models.CharField(max_length=255)
